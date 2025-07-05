@@ -324,6 +324,90 @@
             right: -50px;
         }
         
+        /* 저장 및 불러오기 버튼 스타일 */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .action-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .save-btn {
+            background: linear-gradient(135deg, #00b894, #00a085);
+            color: white;
+        }
+        
+        .load-btn {
+            background: linear-gradient(135deg, #0984e3, #74b9ff);
+            color: white;
+        }
+        
+        .clear-btn {
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+            color: white;
+        }
+        
+        .gender-select {
+            margin-left: 10px;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            background: white;
+        }
+        
+        .relation-input {
+            margin-left: 10px;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            background: white;
+            width: 80px;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .status-message {
+            text-align: center;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .status-message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .status-message.show {
+            opacity: 1;
+        }
+        
+        /* 모바일 대응 */
         @media (max-width: 768px) {
             .container {
                 grid-template-columns: 1fr;
@@ -337,6 +421,10 @@
             .checkbox-columns {
                 grid-template-columns: 1fr;
             }
+            
+            .action-buttons {
+                flex-wrap: wrap;
+            }
         }
     </style>
 </head>
@@ -349,7 +437,7 @@
                 <div class="church-logo">
                     <div>태신자</div>
                     <div>작정카드</div>
-                    <div style="font-size: 12px; margin-top: 3px;">(게인보환명)</div>
+                    <div style="font-size: 12px; margin-top: 3px;">(개인보관명)</div>
                 </div>
                 <h1 class="event-title">2025 새생명 전도축제</h1>
                 <h2 class="main-question">나의 태신자는 누구입니까?</h2>
@@ -365,17 +453,17 @@
                 
                 <div class="input-group">
                     <span class="input-number">01</span>
-                    <input type="text" class="input-field" placeholder="이름을 입력하세요">
+                    <input type="text" class="input-field" id="baptism1" placeholder="이름을 입력하세요">
                 </div>
                 
                 <div class="input-group">
                     <span class="input-number">02</span>
-                    <input type="text" class="input-field" placeholder="이름을 입력하세요">
+                    <input type="text" class="input-field" id="baptism2" placeholder="이름을 입력하세요">
                 </div>
                 
                 <div class="input-group">
                     <span class="input-number">03</span>
-                    <input type="text" class="input-field" placeholder="이름을 입력하세요">
+                    <input type="text" class="input-field" id="baptism3" placeholder="이름을 입력하세요">
                 </div>
             </div>
             
@@ -460,13 +548,12 @@
                 <div class="form-section">
                     <div class="form-row">
                         <span class="form-label">이름</span>
-                        <input type="text" class="form-input" placeholder="성명을 입력하세요">
-                        <span style="margin-left: 10px; color: #6c757d;">직분</span>
+                        <input type="text" class="form-input" id="author-name" placeholder="이름과직분을 입력하세요">
+                        <input type="text" class="relation-input" id="author-group" placeholder="속회">
                     </div>
                     <div class="form-row">
                         <span class="form-label">☎</span>
-                        <input type="text" class="form-input" placeholder="연락처를 입력하세요">
-                        <span style="margin-left: 10px; color: #6c757d;">속회</span>
+                        <input type="text" class="form-input" id="author-phone" placeholder="연락처를 입력하세요">
                     </div>
                 </div>
             </div>
@@ -476,40 +563,238 @@
                 <div class="form-section">
                     <div class="form-row">
                         <span class="form-label">이름</span>
-                        <input type="text" class="form-input" placeholder="태신자 성명 (남,여)">
+                        <input type="text" class="form-input" id="person1-name" placeholder="태신자 성명을 입력하세요">
+                        <select class="gender-select" id="person1-gender">
+                            <option value="">성별</option>
+                            <option value="남">남</option>
+                            <option value="여">여</option>
+                        </select>
                     </div>
                     <div class="form-row">
                         <span class="form-label">☎</span>
-                        <input type="text" class="form-input" placeholder="연락처">
-                        <span style="margin-left: 10px; color: #6c757d;">관계</span>
+                        <input type="text" class="form-input" id="person1-phone" placeholder="연락처">
+                        <input type="text" class="relation-input" id="person1-relation" placeholder="관계">
                     </div>
                 </div>
                 
                 <div class="form-section">
                     <div class="form-row">
                         <span class="form-label">이름</span>
-                        <input type="text" class="form-input" placeholder="태신자 성명 (남,여)">
+                        <input type="text" class="form-input" id="person2-name" placeholder="태신자 성명을 입력하세요">
+                        <select class="gender-select" id="person2-gender">
+                            <option value="">성별</option>
+                            <option value="남">남</option>
+                            <option value="여">여</option>
+                        </select>
                     </div>
                     <div class="form-row">
                         <span class="form-label">☎</span>
-                        <input type="text" class="form-input" placeholder="연락처">
-                        <span style="margin-left: 10px; color: #6c757d;">관계</span>
+                        <input type="text" class="form-input" id="person2-phone" placeholder="연락처">
+                        <input type="text" class="relation-input" id="person2-relation" placeholder="관계">
                     </div>
                 </div>
                 
                 <div class="form-section">
                     <div class="form-row">
                         <span class="form-label">이름</span>
-                        <input type="text" class="form-input" placeholder="태신자 성명 (남,여)">
+                        <input type="text" class="form-input" id="person3-name" placeholder="태신자 성명을 입력하세요">
+                        <select class="gender-select" id="person3-gender">
+                            <option value="">성별</option>
+                            <option value="남">남</option>
+                            <option value="여">여</option>
+                        </select>
                     </div>
                     <div class="form-row">
                         <span class="form-label">☎</span>
-                        <input type="text" class="form-input" placeholder="연락처">
-                        <span style="margin-left: 10px; color: #6c757d;">관계</span>
+                        <input type="text" class="form-input" id="person3-phone" placeholder="연락처">
+                        <input type="text" class="relation-input" id="person3-relation" placeholder="관계">
                     </div>
                 </div>
             </div>
+            
+            <div class="action-buttons">
+                <button class="action-btn save-btn" onclick="saveData()">저장하기</button>
+                <button class="action-btn load-btn" onclick="loadData()">불러오기</button>
+                <button class="action-btn clear-btn" onclick="clearData()">모두 지우기</button>
+            </div>
+            
+            <div class="status-message" id="statusMessage"></div>
         </div>
     </div>
+
+    <script>
+        // 저장된 데이터 키
+        const STORAGE_KEY = 'baptism_card_data';
+        
+        // 상태 메시지 표시 함수
+        function showStatusMessage(message, type = 'success') {
+            const statusEl = document.getElementById('statusMessage');
+            statusEl.textContent = message;
+            statusEl.className = `status-message ${type} show`;
+            
+            setTimeout(() => {
+                statusEl.className = 'status-message';
+            }, 3000);
+        }
+        
+        // 데이터 저장 함수
+        function saveData() {
+            const authorName = document.getElementById('author-name').value.trim();
+            
+            if (!authorName) {
+                showStatusMessage('작성자 이름을 입력해주세요.', 'error');
+                return;
+            }
+            
+            const data = {
+                authorName: authorName,
+                authorPhone: document.getElementById('author-phone').value,
+                authorGroup: document.getElementById('author-group').value,
+                baptism1: document.getElementById('baptism1').value,
+                baptism2: document.getElementById('baptism2').value,
+                baptism3: document.getElementById('baptism3').value,
+                person1Name: document.getElementById('person1-name').value,
+                person1Phone: document.getElementById('person1-phone').value,
+                person1Gender: document.getElementById('person1-gender').value,
+                person1Relation: document.getElementById('person1-relation').value,
+                person2Name: document.getElementById('person2-name').value,
+                person2Phone: document.getElementById('person2-phone').value,
+                person2Gender: document.getElementById('person2-gender').value,
+                person2Relation: document.getElementById('person2-relation').value,
+                person3Name: document.getElementById('person3-name').value,
+                person3Phone: document.getElementById('person3-phone').value,
+                person3Gender: document.getElementById('person3-gender').value,
+                person3Relation: document.getElementById('person3-relation').value,
+                checkboxes: {}
+            };
+            
+            // 체크박스 상태 저장
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                data.checkboxes[checkbox.id] = checkbox.checked;
+            });
+            
+            // 메모리에 저장 (브라우저 저장소 대신)
+            window.savedData = window.savedData || {};
+            window.savedData[authorName] = data;
+            
+            showStatusMessage(`${authorName}님의 데이터가 저장되었습니다.`, 'success');
+        }
+        
+        // 데이터 불러오기 함수
+        function loadData() {
+            const authorName = document.getElementById('author-name').value.trim();
+            
+            if (!authorName) {
+                showStatusMessage('작성자 이름을 입력해주세요.', 'error');
+                return;
+            }
+            
+            // 메모리에서 데이터 불러오기
+            const savedData = window.savedData && window.savedData[authorName];
+            
+            if (!savedData) {
+                showStatusMessage(`${authorName}님의 저장된 데이터가 없습니다.`, 'error');
+                return;
+            }
+            
+            // 폼 데이터 복원
+            document.getElementById('author-phone').value = savedData.authorPhone || '';
+            document.getElementById('author-group').value = savedData.authorGroup || '';
+            document.getElementById('baptism1').value = savedData.baptism1 || '';
+            document.getElementById('baptism2').value = savedData.baptism2 || '';
+            document.getElementById('baptism3').value = savedData.baptism3 || '';
+            document.getElementById('person1-name').value = savedData.person1Name || '';
+            document.getElementById('person1-phone').value = savedData.person1Phone || '';
+            document.getElementById('person1-gender').value = savedData.person1Gender || '';
+            document.getElementById('person1-relation').value = savedData.person1Relation || '';
+            document.getElementById('person2-name').value = savedData.person2Name || '';
+            document.getElementById('person2-phone').value = savedData.person2Phone || '';
+            document.getElementById('person2-gender').value = savedData.person2Gender || '';
+            document.getElementById('person2-relation').value = savedData.person2Relation || '';
+            document.getElementById('person3-name').value = savedData.person3Name || '';
+            document.getElementById('person3-phone').value = savedData.person3Phone || '';
+            document.getElementById('person3-gender').value = savedData.person3Gender || '';
+            document.getElementById('person3-relation').value = savedData.person3Relation || '';
+            
+            // 체크박스 상태 복원
+            if (savedData.checkboxes) {
+                Object.keys(savedData.checkboxes).forEach(id => {
+                    const checkbox = document.getElementById(id);
+                    if (checkbox) {
+                        checkbox.checked = savedData.checkboxes[id];
+                    }
+                });
+            }
+            
+            showStatusMessage(`${authorName}님의 데이터를 불러왔습니다.`, 'success');
+        }
+        
+        // 데이터 지우기 함수
+        function clearData() {
+            if (confirm('모든 입력 내용을 지우시겠습니까?')) {
+                // 모든 입력 필드 초기화
+                const inputs = document.querySelectorAll('input[type="text"]');
+                inputs.forEach(input => {
+                    input.value = '';
+                });
+                
+                // 모든 셀렉트 박스 초기화
+                const selects = document.querySelectorAll('select');
+                selects.forEach(select => {
+                    select.selectedIndex = 0;
+                });
+                
+                // 모든 체크박스 초기화
+                const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                
+                showStatusMessage('모든 데이터가 지워졌습니다.', 'success');
+            }
+        }
+        
+        // 입력 필드 변경 시 자동 동기화
+        function syncBaptismData() {
+            const person1Name = document.getElementById('person1-name').value;
+            const person1Gender = document.getElementById('person1-gender').value;
+            const person2Name = document.getElementById('person2-name').value;
+            const person2Gender = document.getElementById('person2-gender').value;
+            const person3Name = document.getElementById('person3-name').value;
+            const person3Gender = document.getElementById('person3-gender').value;
+            
+            // 이름과 성별 조합하여 왼쪽 카드에 표시
+            document.getElementById('baptism1').value = person1Name + (person1Gender ? ` (${person1Gender})` : '');
+            document.getElementById('baptism2').value = person2Name + (person2Gender ? ` (${person2Gender})` : '');
+            document.getElementById('baptism3').value = person3Name + (person3Gender ? ` (${person3Gender})` : '');
+        }
+        
+        // 왼쪽 카드에서 오른쪽 카드로 동기화
+        function syncFromLeftToRight() {
+            document.getElementById('person1-name').value = document.getElementById('baptism1').value.replace(/ \(남\)| \(여\)/g, '');
+            document.getElementById('person2-name').value = document.getElementById('baptism2').value.replace(/ \(남\)| \(여\)/g, '');
+            document.getElementById('person3-name').value = document.getElementById('baptism3').value.replace(/ \(남\)| \(여\)/g, '');
+        }
+        
+        // 이벤트 리스너 등록
+        document.getElementById('person1-name').addEventListener('input', syncBaptismData);
+        document.getElementById('person1-gender').addEventListener('change', syncBaptismData);
+        document.getElementById('person2-name').addEventListener('input', syncBaptismData);
+        document.getElementById('person2-gender').addEventListener('change', syncBaptismData);
+        document.getElementById('person3-name').addEventListener('input', syncBaptismData);
+        document.getElementById('person3-gender').addEventListener('change', syncBaptismData);
+        
+        // 왼쪽 카드 입력 시 오른쪽 카드로 동기화
+        document.getElementById('baptism1').addEventListener('input', syncFromLeftToRight);
+        document.getElementById('baptism2').addEventListener('input', syncFromLeftToRight);
+        document.getElementById('baptism3').addEventListener('input', syncFromLeftToRight);
+        
+        // 페이지 로드 시 초기화
+        window.addEventListener('load', function() {
+            window.savedData = {};
+            showStatusMessage('태신자 작정카드가 준비되었습니다.', 'success');
+        });
+    </script>
 </body>
 </html>
