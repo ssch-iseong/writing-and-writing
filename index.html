@@ -318,7 +318,7 @@
                 <div class="form-section">
                     <div class="form-row">
                         <span class="form-label">이름</span>
-                        <input type="text" class="form-input" id="person1-name" placeholder="태신자 성명을 입력하세요">
+                        <input type="text" class="form-input person-name" id="person1-name" placeholder="태신자 성명을 입력하세요">
                         <select class="gender-select" id="person1-gender">
                             <option value="">성별</option>
                             <option value="남">남</option>
@@ -334,7 +334,7 @@
                 <div class="form-section">
                     <div class="form-row">
                         <span class="form-label">이름</span>
-                        <input type="text" class="form-input" id="person2-name" placeholder="태신자 성명을 입력하세요">
+                        <input type="text" class="form-input person-name" id="person2-name" placeholder="태신자 성명을 입력하세요">
                         <select class="gender-select" id="person2-gender">
                             <option value="">성별</option>
                             <option value="남">남</option>
@@ -350,7 +350,7 @@
                 <div class="form-section">
                     <div class="form-row">
                         <span class="form-label">이름</span>
-                        <input type="text" class="form-input" id="person3-name" placeholder="태신자 성명을 입력하세요">
+                        <input type="text" class="form-input person-name" id="person3-name" placeholder="태신자 성명을 입력하세요">
                         <select class="gender-select" id="person3-gender">
                             <option value="">성별</option>
                             <option value="남">남</option>
@@ -373,12 +373,13 @@
         </div>
     </div>
     <script>
-        // 태신자 이름 자동 연동
+        // 태신자 이름 자동 연동 (교회제출용 → 개인보관용)
         function syncBaptismNames() {
             document.getElementById('baptism1').value = document.getElementById('person1-name').value;
             document.getElementById('baptism2').value = document.getElementById('person2-name').value;
             document.getElementById('baptism3').value = document.getElementById('person3-name').value;
         }
+        // 입력 이벤트 연결
         ['person1-name', 'person2-name', 'person3-name'].forEach(id => {
             document.getElementById(id).addEventListener('input', syncBaptismNames);
         });
@@ -538,11 +539,8 @@
             });
         }
 
+        // 모두 지우기: 모든 입력값 즉시 초기화
         function clearData() {
-            if (!confirm('모든 입력값을 초기화하시겠습니까?')) {
-                return;
-            }
-
             // 모든 입력 필드 초기화
             document.getElementById('author-name').value = '';
             document.getElementById('author-phone').value = '';
@@ -553,4 +551,18 @@
             document.getElementById('person1-relation').value = '';
             document.getElementById('person2-name').value = '';
             document.getElementById('person2-phone').value = '';
-            document.getElementById('person2
+            document.getElementById('person2-gender').value = '';
+            document.getElementById('person2-relation').value = '';
+            document.getElementById('person3-name').value = '';
+            document.getElementById('person3-phone').value = '';
+            document.getElementById('person3-gender').value = '';
+            document.getElementById('person3-relation').value = '';
+            ['care1','care2','care3','care4','invite1','invite2','invite3','invite4'].forEach(id => {
+                document.getElementById(id).checked = false;
+            });
+            syncBaptismNames();
+            showStatusMessage('모든 입력값이 지워졌습니다.', 'success');
+        }
+    </script>
+</body>
+</html>
