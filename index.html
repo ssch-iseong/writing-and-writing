@@ -3,198 +3,405 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>태신자 작정카드 제출</title>
+    <title>태신자 작정카드 (개인보관용 → 교회제출용)</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap');
         body {
             font-family: 'Noto Sans KR', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 0;
-            margin: 0;
+            padding: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         .container {
-            background: #fff;
-            padding: 40px 30px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-            max-width: 400px;
+            max-width: 600px;
             width: 100%;
         }
-        .title {
-            font-size: 26px;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 24px;
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .hide { display: none !important; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .church-logo {
+            width: 120px; height: 120px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            color: white; font-weight: 700; font-size: 16px;
+            line-height: 1.1; text-align: center; padding: 15px;
+        }
+        .baptism-info {
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            padding: 20px; border-radius: 15px; margin-bottom: 20px; text-align: center;
+        }
+        .section-title {
+            display: inline-block; padding: 8px 20px; border-radius: 25px;
+            font-weight: 600; font-size: 18px; margin-bottom: 20px;
+            background: linear-gradient(135deg, #a29bfe, #6c5ce7); color: white;
+        }
+        .form-section { margin-bottom: 25px; }
+        .form-row {
+            display: flex; align-items: center; margin-bottom: 15px;
+            padding: 15px; background: #f8f9fa; border-radius: 12px;
+        }
+        .form-label { font-weight: 500; margin-right: 20px; min-width: 60px; color: #495057; }
+        .form-input {
+            flex: 1; border: none; background: transparent; font-size: 16px;
+            padding: 5px 0; border-bottom: 2px solid #ddd; transition: border-color 0.3s;
+        }
+        .form-input:focus { outline: none; border-bottom-color: #a29bfe; }
+        .gender-select {
+            margin-left: 10px; padding: 5px 10px; border: 1px solid #ddd;
+            border-radius: 5px; font-size: 14px; background: white;
+        }
+        .relation-input {
+            margin-left: 10px; padding: 5px 10px; border: 1px solid #ddd;
+            border-radius: 5px; font-size: 14px; background: white; width: 80px;
+        }
+        .checkbox-section {
+            background: #f8f9fa; padding: 25px; border-radius: 15px; margin-top: 30px;
+        }
+        .checkbox-title {
+            font-size: 18px; font-weight: 600; color: #2c3e50;
+            margin-bottom: 20px; text-align: center;
+        }
+        .checkbox-columns {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+        }
+        .checkbox-group h4 {
+            font-size: 16px; font-weight: 600; margin-bottom: 15px;
+            padding: 10px; border-radius: 10px;
+            background: linear-gradient(135deg, #74b9ff, #0984e3); color: white;
+        }
+        .checkbox-group.stage2 h4 {
+            background: linear-gradient(135deg, #fd79a8, #e84393); color: white;
+        }
+        .checkbox-item {
+            display: flex; align-items: flex-start; margin-bottom: 12px;
+            font-size: 14px; color: #495057; line-height: 1.5;
+        }
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 12px; margin-top: 2px; transform: scale(1.2);
+            accent-color: #74b9ff; flex-shrink: 0;
+        }
+        .checkbox-item label { cursor: pointer; line-height: 1.5; }
+        .action-buttons {
+            display: flex; gap: 15px; justify-content: center; margin-top: 20px;
+        }
+        .action-btn {
+            padding: 10px 20px; border: none; border-radius: 25px;
+            font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.3s;
+            background: linear-gradient(135deg, #00b894, #00a085); color: white;
+        }
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .status-message {
+            text-align: center; margin-top: 10px; padding: 10px;
+            border-radius: 8px; font-size: 14px; opacity: 0; transition: opacity 0.3s;
+        }
+        .status-message.show { opacity: 1; }
+        .church-info {
+            text-align: center; margin-top: 30px; padding-top: 20px;
+            border-top: 2px solid #f1f3f4;
+        }
+        .church-name { font-size: 20px; font-weight: 700; color: #2c3e50; }
+        .church-name-en { font-size: 12px; color: #6c757d; margin-top: 5px; }
+        .event-title {
+            font-size: 28px; font-weight: 700;
             background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
         }
-        .input-group {
-            margin-bottom: 20px;
+        .main-question {
+            font-size: 24px; font-weight: 600; color: #2c3e50; margin-bottom: 10px;
         }
-        .input-label {
-            display: block;
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: #495057;
+        .event-info {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 20px; border-radius: 15px; margin-bottom: 30px;
+        }
+        .event-date { font-size: 18px; font-weight: 600; color: #495057; margin-bottom: 5px; }
+        .event-location { font-size: 16px; color: #6c757d; }
+        .highlight-date { color: #e74c3c; font-weight: 700; }
+        .my-baptism { background: linear-gradient(135deg, #ffeaa7, #fab1a0); color: #2d3436; }
+        .promise { background: linear-gradient(135deg, #fd79a8, #e84393); color: white; }
+        .input-group { margin-bottom: 20px; }
+        .input-number {
+            display: inline-block; width: 35px; height: 35px;
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white; border-radius: 50%; text-align: center;
+            line-height: 35px; font-weight: 600; margin-right: 15px;
         }
         .input-field {
-            width: 100%;
-            padding: 12px;
-            border: 1.5px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            background: #f8f9fa;
-            box-sizing: border-box;
+            display: inline-block; border-bottom: 2px solid #ddd;
+            min-width: 300px; height: 40px; font-size: 16px;
+            background: transparent; transition: border-color 0.3s;
         }
-        .submit-btn {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #00b894, #00a085);
-            color: #fff;
-            font-weight: 700;
-            font-size: 16px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: background 0.2s;
+        .input-field:focus { outline: none; border-bottom-color: #74b9ff; }
+        .promise-text {
+            background: #f8f9fa; padding: 20px; border-radius: 15px;
+            margin-bottom: 15px; border-left: 4px solid #fd79a8;
         }
-        .submit-btn:hover {
-            background: linear-gradient(135deg, #00a085, #00b894);
-        }
-        .result-card {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            padding: 30px 20px;
-            background: #f8f9fa;
-            border-radius: 18px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.07);
-            margin-top: 20px;
-        }
-        .result-title {
-            font-size: 22px;
-            font-weight: 700;
-            color: #2c3e50;
-            margin-bottom: 12px;
-        }
-        .result-content {
-            font-size: 18px;
-            color: #495057;
-            margin-bottom: 8px;
-        }
-        .back-btn {
-            margin-top: 18px;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #fd79a8, #e84393);
-            color: #fff;
-            border: none;
-            border-radius: 7px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        .status-message {
-            text-align: center;
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 15px;
-            display: none;
-        }
-        .status-message.success {
-            background: #d4edda; color: #155724; border: 1px solid #c3e6cb;
-        }
-        .status-message.error {
-            background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;
-        }
-        @media (max-width: 500px) {
-            .container { padding: 20px 6px; }
+        .promise-item { font-size: 15px; line-height: 1.6; color: #495057; margin-bottom: 10px; }
+        @media (max-width: 600px) {
+            .card { padding: 15px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div id="input-form">
-            <div class="title">태신자 이름 제출</div>
-            <form id="baptismForm">
-                <div class="input-group">
-                    <label class="input-label" for="baptismName">태신자 이름</label>
-                    <input type="text" class="input-field" id="baptismName" name="baptismName" placeholder="이름을 입력하세요" required>
+        <!-- 개인보관용 카드 (처음에만 보임) -->
+        <div class="card" id="personalCard">
+            <div class="header">
+                <div class="church-logo">
+                    <div>태신자</div>
+                    <div>작정카드</div>
+                    <div style="font-size: 12px; margin-top: 3px;">(개인보관용)</div>
                 </div>
-                <button type="submit" class="submit-btn">제출하기</button>
-            </form>
-            <div class="status-message" id="statusMessage"></div>
+                <h1 class="event-title">2025 새생명 전도축제</h1>
+                <h2 class="main-question">나의 태신자는 누구입니까?</h2>
+            </div>
+            <div class="event-info">
+                <div class="event-date">일시: 2025년 <span class="highlight-date">10월 12일</span>(주일)</div>
+                <div class="event-location">장소: 인천성산교회 대예배당</div>
+            </div>
+            <div class="section">
+                <div class="section-title my-baptism">나의 태신자</div>
+                <div class="input-group">
+                    <span class="input-number">01</span>
+                    <input type="text" class="input-field" id="baptism1" placeholder="이름을 입력하세요">
+                </div>
+                <div class="input-group">
+                    <span class="input-number">02</span>
+                    <input type="text" class="input-field" id="baptism2" placeholder="이름을 입력하세요">
+                </div>
+                <div class="input-group">
+                    <span class="input-number">03</span>
+                    <input type="text" class="input-field" id="baptism3" placeholder="이름을 입력하세요">
+                </div>
+            </div>
+            <div class="section">
+                <div class="section-title promise">서약</div>
+                <div class="promise-text">
+                    <div class="promise-item">01. 예수님께서 보여주신 희생과 사랑으로 태신자를 품겠습니다.</div>
+                    <div class="promise-item">02. 태신자를 작정하고 하루 한 번 이상 기도하겠습니다.</div>
+                    <div class="promise-item">03. 태신자를 사랑으로 섬기고 교회에 초청하겠습니다.</div>
+                </div>
+            </div>
+            <div class="checkbox-section">
+                <div class="checkbox-title">✓ 태신자 양육 체크표</div>
+                <div class="checkbox-columns">
+                    <div class="checkbox-group stage1">
+                        <h4>1단계 관계형성 및 복음소개</h4>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="care1" >
+                            <label for="care1">매일 정한 시간에 중보기도 합니다.</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="care2" >
+                            <label for="care2">전화/문자 연락을 지속합니다.</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="care3" >
+                            <label for="care3">관심을 갖고 크고 작은 필요를 섬겨줍니다.</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="care4" >
+                            <label for="care4">구체적인 기도제목들을 알아봅니다.</label>
+                        </div>
+                    </div>
+                    <div class="checkbox-group stage2">
+                        <h4>2단계 교회 초청 및 정착</h4>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="invite1" >
+                            <label for="invite1">새생명 전도축제에 초대합니다.</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="invite2" >
+                            <label for="invite2">새가족 등록/교육을 안내합니다.</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="invite3" >
+                            <label for="invite3">예수님을 영접하도록 도와줍니다.</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="invite4" >
+                            <label for="invite4">지속적인 예배 참석을 권유합니다.</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="church-info">
+                <div class="church-name">인천성산교회</div>
+                <div class="church-name-en">INCHEON SEONGSAN METHODIST CHURCH</div>
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn" id="goToSubmit" type="button">제출하기</button>
+            </div>
         </div>
-        <div id="result-card" class="result-card">
-            <div class="result-title">제출 완료</div>
-            <div class="result-content" id="resultName"></div>
-            <button class="back-btn" onclick="goBack()">처음으로</button>
+        <!-- 교회제출용 카드 (처음엔 숨김) -->
+        <div class="card hide" id="churchCard">
+          <form id="baptismForm" action="https://script.google.com/macros/s/AKfycbx71QhgB7D-f0OIE8TtYjb1KpnMa2VTQV0kuQGmXiJF7wKZJYWpASM8It2SMNXGaAb17A/exec" method="POST">
+            <div class="header">
+                <div class="church-logo">
+                    <div>태신자</div>
+                    <div>작정카드</div>
+                    <div style="font-size: 12px; margin-top: 3px;">(교회제출용)</div>
+                </div>
+                <div class="baptism-info">
+                    <h3>일시: 2025년 10월 12일(주일)</h3>
+                    <div>장소: 인천성산교회 대예배당</div>
+                </div>
+            </div>
+            <div class="section">
+                <div class="section-title">작성자</div>
+                <div class="form-section">
+                    <div class="form-row">
+                        <span class="form-label">이름</span>
+                        <input type="text" class="form-input" id="author-name" name="authorName" placeholder="이름과직분을 입력하세요" required>
+                        <input type="text" class="relation-input" id="author-group" name="authorGroup" placeholder="속회">
+                    </div>
+                    <div class="form-row">
+                        <span class="form-label">☎</span>
+                        <input type="text" class="form-input" id="author-phone" name="authorPhone" placeholder="연락처를 입력하세요">
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <div class="section-title">나의 태신자</div>
+                <div class="form-section">
+                    <div class="form-row">
+                        <span class="form-label">이름</span>
+                        <input type="text" class="form-input" id="person1-name" name="person1Name" placeholder="태신자 성명을 입력하세요">
+                        <select class="gender-select" id="person1-gender" name="person1Gender">
+                            <option value="">성별</option>
+                            <option value="남">남</option>
+                            <option value="여">여</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <span class="form-label">☎</span>
+                        <input type="text" class="form-input" id="person1-phone" name="person1Phone" placeholder="연락처">
+                        <input type="text" class="relation-input" id="person1-relation" name="person1Relation" placeholder="관계">
+                    </div>
+                </div>
+                <div class="form-section">
+                    <div class="form-row">
+                        <span class="form-label">이름</span>
+                        <input type="text" class="form-input" id="person2-name" name="person2Name" placeholder="태신자 성명을 입력하세요">
+                        <select class="gender-select" id="person2-gender" name="person2Gender">
+                            <option value="">성별</option>
+                            <option value="남">남</option>
+                            <option value="여">여</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <span class="form-label">☎</span>
+                        <input type="text" class="form-input" id="person2-phone" name="person2Phone" placeholder="연락처">
+                        <input type="text" class="relation-input" id="person2-relation" name="person2Relation" placeholder="관계">
+                    </div>
+                </div>
+                <div class="form-section">
+                    <div class="form-row">
+                        <span class="form-label">이름</span>
+                        <input type="text" class="form-input" id="person3-name" name="person3Name" placeholder="태신자 성명을 입력하세요">
+                        <select class="gender-select" id="person3-gender" name="person3Gender">
+                            <option value="">성별</option>
+                            <option value="남">남</option>
+                            <option value="여">여</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <span class="form-label">☎</span>
+                        <input type="text" class="form-input" id="person3-phone" name="person3Phone" placeholder="연락처">
+                        <input type="text" class="relation-input" id="person3-relation" name="person3Relation" placeholder="관계">
+                    </div>
+                </div>
+            </div>
+            <div class="checkbox-section">
+                <div class="checkbox-title">✓ 태신자 양육 체크표</div>
+                <div class="checkbox-columns">
+                    <div class="checkbox-group stage1">
+                        <h4>1단계 관계형성 및 복음소개</h4>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="care1_c" name="care1">
+                            <label for="care1_c">매일 정한 시간에 중보기도 합니다.</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="care2_c" name="care2">
+                            <label for="care2_c">전화/문자 연락을 지속합니다.</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="care3_c" name="care3">
+                            <label for="care3_c">관심을 갖고 크고 작은 필요를 섬겨줍니다.</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="care4_c" name="care4">
+                            <label for="care4_c">구체적인 기도제목들을 알아봅니다.</label>
+                        </div>
+                    </div>
+                    <div class="checkbox-group stage2">
+                        <h4>2단계 교회 초청 및 정착</h4>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="invite1_c" name="invite1">
+                            <label for="invite1_c">새생명 전도축제에 초대합니다.</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="invite2_c" name="invite2">
+                            <label for="invite2_c">새가족 등록/교육을 안내합니다.</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="invite3_c" name="invite3">
+                            <label for="invite3_c">예수님을 영접하도록 도와줍니다.</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="invite4_c" name="invite4">
+                            <label for="invite4_c">지속적인 예배 참석을 권유합니다.</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn" type="submit">저장하기</button>
+            </div>
+            <div class="status-message" id="statusMessage"></div>
+          </form>
         </div>
     </div>
     <script>
-        const form = document.getElementById('baptismForm');
-        const statusMessage = document.getElementById('statusMessage');
-        const inputForm = document.getElementById('input-form');
-        const resultCard = document.getElementById('result-card');
-        const resultName = document.getElementById('resultName');
+        // 개인보관용 → 교회제출용 화면 전환 및 데이터 복사
+        document.getElementById('goToSubmit').addEventListener('click', function() {
+            // 입력값 복사
+            document.getElementById('person1-name').value = document.getElementById('baptism1').value;
+            document.getElementById('person2-name').value = document.getElementById('baptism2').value;
+            document.getElementById('person3-name').value = document.getElementById('baptism3').value;
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            statusMessage.style.display = 'none';
+            // 체크박스 복사
+            document.getElementById('care1_c').checked = document.getElementById('care1').checked;
+            document.getElementById('care2_c').checked = document.getElementById('care2').checked;
+            document.getElementById('care3_c').checked = document.getElementById('care3').checked;
+            document.getElementById('care4_c').checked = document.getElementById('care4').checked;
+            document.getElementById('invite1_c').checked = document.getElementById('invite1').checked;
+            document.getElementById('invite2_c').checked = document.getElementById('invite2').checked;
+            document.getElementById('invite3_c').checked = document.getElementById('invite3').checked;
+            document.getElementById('invite4_c').checked = document.getElementById('invite4').checked;
 
-            const name = document.getElementById('baptismName').value.trim();
-            if (!name) {
-                showStatus('이름을 입력해주세요.', 'error');
-                return;
-            }
-
-            // Google Apps Script Webhook URL
-            const url = "https://script.google.com/macros/s/AKfycbwyqkcfuJtC5wUb31y5VIsNoYEauJcQqXBky_rNBfExa47Lz9RugVG7pyBZrol9pI4v4A/exec";
-            const data = { baptismName: name };
-
-            fetch(url, {
-                method: 'POST',
-                mode: 'cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(res => {
-                if (res.result === "success" || res.success) {
-                    showResult(name);
-                } else {
-                    showStatus('제출에 실패했습니다. 다시 시도해주세요.', 'error');
-                }
-            })
-            .catch(() => {
-                showStatus('네트워크 오류가 발생했습니다.', 'error');
-            });
+            // 화면 전환
+            document.getElementById('personalCard').classList.add('hide');
+            document.getElementById('churchCard').classList.remove('hide');
         });
-
-        function showStatus(msg, type) {
-            statusMessage.textContent = msg;
-            statusMessage.className = 'status-message ' + type;
-            statusMessage.style.display = 'block';
-        }
-
-        function showResult(name) {
-            inputForm.style.display = 'none';
-            resultCard.style.display = 'flex';
-            resultName.textContent = `입력한 태신자 이름: ${name}`;
-        }
-
-        function goBack() {
-            // Reset form and UI
-            form.reset();
-            inputForm.style.display = 'block';
-            resultCard.style.display = 'none';
-            statusMessage.style.display = 'none';
-        }
     </script>
 </body>
 </html>
