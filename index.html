@@ -6,13 +6,7 @@
     <title>태신자 작정카드</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Noto Sans KR', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -22,7 +16,6 @@
             align-items: center;
             justify-content: center;
         }
-        
         .container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -30,7 +23,6 @@
             max-width: 1200px;
             width: 100%;
         }
-        
         .card {
             background: white;
             border-radius: 20px;
@@ -39,7 +31,6 @@
             position: relative;
             overflow: hidden;
         }
-        
         .card::before {
             content: '';
             position: absolute;
@@ -49,440 +40,197 @@
             height: 6px;
             background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
         }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
+        .header { text-align: center; margin-bottom: 30px; }
         .church-logo {
-            width: 120px;
-            height: 120px;
+            width: 120px; height: 120px;
             background: linear-gradient(135deg, #667eea, #764ba2);
             border-radius: 50%;
             margin: 0 auto 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 16px;
-            line-height: 1.1;
-            text-align: center;
-            padding: 15px;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            color: white; font-weight: 700; font-size: 16px;
+            line-height: 1.1; text-align: center; padding: 15px;
         }
-        
         .event-title {
-            font-size: 28px;
-            font-weight: 700;
+            font-size: 28px; font-weight: 700;
             background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 15px;
         }
-        
         .main-question {
-            font-size: 24px;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 10px;
+            font-size: 24px; font-weight: 600; color: #2c3e50; margin-bottom: 10px;
         }
-        
         .event-info {
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 30px;
+            padding: 20px; border-radius: 15px; margin-bottom: 30px;
         }
-        
-        .event-date {
-            font-size: 18px;
-            font-weight: 600;
-            color: #495057;
-            margin-bottom: 5px;
-        }
-        
-        .event-location {
-            font-size: 16px;
-            color: #6c757d;
-        }
-        
-        .highlight-date {
-            color: #e74c3c;
-            font-weight: 700;
-        }
-        
+        .event-date { font-size: 18px; font-weight: 600; color: #495057; margin-bottom: 5px; }
+        .event-location { font-size: 16px; color: #6c757d; }
+        .highlight-date { color: #e74c3c; font-weight: 700; }
         .section-title {
-            display: inline-block;
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 18px;
-            margin-bottom: 20px;
+            display: inline-block; padding: 8px 20px; border-radius: 25px;
+            font-weight: 600; font-size: 18px; margin-bottom: 20px;
         }
-        
-        .my-baptism {
-            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
-            color: #2d3436;
-        }
-        
-        .promise {
-            background: linear-gradient(135deg, #fd79a8, #e84393);
-            color: white;
-        }
-        
-        .input-group {
-            margin-bottom: 20px;
-        }
-        
+        .my-baptism { background: linear-gradient(135deg, #ffeaa7, #fab1a0); color: #2d3436; }
+        .promise { background: linear-gradient(135deg, #fd79a8, #e84393); color: white; }
+        .input-group { margin-bottom: 20px; }
         .input-number {
-            display: inline-block;
-            width: 35px;
-            height: 35px;
+            display: inline-block; width: 35px; height: 35px;
             background: linear-gradient(135deg, #74b9ff, #0984e3);
-            color: white;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 35px;
-            font-weight: 600;
-            margin-right: 15px;
+            color: white; border-radius: 50%; text-align: center;
+            line-height: 35px; font-weight: 600; margin-right: 15px;
         }
-        
         .input-field {
-            display: inline-block;
-            border-bottom: 2px solid #ddd;
-            min-width: 300px;
-            height: 40px;
-            font-size: 16px;
-            background: transparent;
-            transition: border-color 0.3s;
+            display: inline-block; border-bottom: 2px solid #ddd;
+            min-width: 300px; height: 40px; font-size: 16px;
+            background: transparent; transition: border-color 0.3s;
         }
-        
-        .input-field:focus {
-            outline: none;
-            border-bottom-color: #74b9ff;
-        }
-        
+        .input-field:focus { outline: none; border-bottom-color: #74b9ff; }
         .promise-text {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 15px;
-            border-left: 4px solid #fd79a8;
+            background: #f8f9fa; padding: 20px; border-radius: 15px;
+            margin-bottom: 15px; border-left: 4px solid #fd79a8;
         }
-        
-        .promise-item {
-            font-size: 15px;
-            line-height: 1.6;
-            color: #495057;
-            margin-bottom: 10px;
-        }
-        
+        .promise-item { font-size: 15px; line-height: 1.6; color: #495057; margin-bottom: 10px; }
         .checkbox-section {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 15px;
-            margin-top: 30px;
+            background: #f8f9fa; padding: 25px; border-radius: 15px; margin-top: 30px;
         }
-        
         .checkbox-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 20px;
-            text-align: center;
+            font-size: 18px; font-weight: 600; color: #2c3e50;
+            margin-bottom: 20px; text-align: center;
         }
-        
         .checkbox-columns {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
         }
-        
         .checkbox-group h4 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            padding: 10px;
-            border-radius: 10px;
+            font-size: 16px; font-weight: 600; margin-bottom: 15px;
+            padding: 10px; border-radius: 10px;
         }
-        
-        .stage1 h4 {
-            background: linear-gradient(135deg, #74b9ff, #0984e3);
-            color: white;
-        }
-        
-        .stage2 h4 {
-            background: linear-gradient(135deg, #fd79a8, #e84393);
-            color: white;
-        }
-        
+        .stage1 h4 { background: linear-gradient(135deg, #74b9ff, #0984e3); color: white; }
+        .stage2 h4 { background: linear-gradient(135deg, #fd79a8, #e84393); color: white; }
         .checkbox-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 12px;
-            font-size: 14px;
-            color: #495057;
-            line-height: 1.5;
+            display: flex; align-items: flex-start; margin-bottom: 12px;
+            font-size: 14px; color: #495057; line-height: 1.5;
         }
-        
         .checkbox-item input[type="checkbox"] {
-            margin-right: 12px;
-            margin-top: 2px;
-            transform: scale(1.2);
-            accent-color: #74b9ff;
-            flex-shrink: 0;
+            margin-right: 12px; margin-top: 2px; transform: scale(1.2);
+            accent-color: #74b9ff; flex-shrink: 0;
         }
-        
-        .checkbox-item label {
-            cursor: pointer;
-            line-height: 1.5;
-        }
-        
+        .checkbox-item label { cursor: pointer; line-height: 1.5; }
         .church-info {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
+            text-align: center; margin-top: 30px; padding-top: 20px;
             border-top: 2px solid #f1f3f4;
         }
-        
-        .church-name {
-            font-size: 20px;
-            font-weight: 700;
-            color: #2c3e50;
-        }
-        
-        .church-name-en {
-            font-size: 12px;
-            color: #6c757d;
-            margin-top: 5px;
-        }
-        
-        /* 오른쪽 카드 스타일 */
-        .right-card .section-title {
-            background: linear-gradient(135deg, #a29bfe, #6c5ce7);
-            color: white;
-        }
-        
-        .form-section {
-            margin-bottom: 25px;
-        }
-        
+        .church-name { font-size: 20px; font-weight: 700; color: #2c3e50; }
+        .church-name-en { font-size: 12px; color: #6c757d; margin-top: 5px; }
+        .right-card .section-title { background: linear-gradient(135deg, #a29bfe, #6c5ce7); color: white; }
+        .form-section { margin-bottom: 25px; }
         .form-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 12px;
+            display: flex; align-items: center; margin-bottom: 15px;
+            padding: 15px; background: #f8f9fa; border-radius: 12px;
         }
-        
-        .form-label {
-            font-weight: 500;
-            margin-right: 20px;
-            min-width: 60px;
-            color: #495057;
-        }
-        
+        .form-label { font-weight: 500; margin-right: 20px; min-width: 60px; color: #495057; }
         .form-input {
-            flex: 1;
-            border: none;
-            background: transparent;
-            font-size: 16px;
-            padding: 5px 0;
-            border-bottom: 2px solid #ddd;
-            transition: border-color 0.3s;
+            flex: 1; border: none; background: transparent; font-size: 16px;
+            padding: 5px 0; border-bottom: 2px solid #ddd; transition: border-color 0.3s;
         }
-        
-        .form-input:focus {
-            outline: none;
-            border-bottom-color: #a29bfe;
-        }
-        
+        .form-input:focus { outline: none; border-bottom-color: #a29bfe; }
         .baptism-info {
             background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            text-align: center;
+            padding: 20px; border-radius: 15px; margin-bottom: 20px; text-align: center;
         }
-        
-        .baptism-info h3 {
-            color: #2d3436;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        
+        .baptism-info h3 { color: #2d3436; font-weight: 600; margin-bottom: 10px; }
         .decorative-element {
-            position: absolute;
-            width: 100px;
-            height: 100px;
+            position: absolute; width: 100px; height: 100px;
             background: linear-gradient(135deg, rgba(116, 185, 255, 0.1), rgba(162, 155, 254, 0.1));
-            border-radius: 50%;
-            top: -50px;
-            right: -50px;
+            border-radius: 50%; top: -50px; right: -50px;
         }
-        
-        /* 저장 및 불러오기 버튼 스타일 */
         .action-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 20px;
+            display: flex; gap: 15px; justify-content: center; margin-top: 20px;
         }
-        
         .action-btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s;
+            padding: 10px 20px; border: none; border-radius: 25px;
+            font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.3s;
         }
-        
-        .save-btn {
-            background: linear-gradient(135deg, #00b894, #00a085);
-            color: white;
-        }
-        
-        .load-btn {
-            background: linear-gradient(135deg, #0984e3, #74b9ff);
-            color: white;
-        }
-        
-        .clear-btn {
-            background: linear-gradient(135deg, #fd79a8, #e84393);
-            color: white;
-        }
-        
+        .save-btn { background: linear-gradient(135deg, #00b894, #00a085); color: white; }
+        .load-btn { background: linear-gradient(135deg, #0984e3, #74b9ff); color: white; }
+        .clear-btn { background: linear-gradient(135deg, #fd79a8, #e84393); color: white; }
         .gender-select {
-            margin-left: 10px;
-            padding: 5px 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-            background: white;
+            margin-left: 10px; padding: 5px 10px; border: 1px solid #ddd;
+            border-radius: 5px; font-size: 14px; background: white;
         }
-        
         .relation-input {
-            margin-left: 10px;
-            padding: 5px 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-            background: white;
-            width: 80px;
+            margin-left: 10px; padding: 5px 10px; border: 1px solid #ddd;
+            border-radius: 5px; font-size: 14px; background: white; width: 80px;
         }
-        
         .action-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
-        
         .status-message {
-            text-align: center;
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 14px;
-            opacity: 0;
-            transition: opacity 0.3s;
+            text-align: center; margin-top: 10px; padding: 10px;
+            border-radius: 8px; font-size: 14px; opacity: 0; transition: opacity 0.3s;
         }
-        
         .status-message.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+            background: #d4edda; color: #155724; border: 1px solid #c3e6cb;
         }
-        
         .status-message.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+            background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;
         }
-        
         .status-message.warning {
-            background: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeaa7;
+            background: #fff3cd; color: #856404; border: 1px solid #ffeaa7;
         }
-        
-        .status-message.show {
-            opacity: 1;
-        }
-        
-        /* 모바일 대응 */
+        .status-message.show { opacity: 1; }
+        .hide { display: none !important; }
         @media (max-width: 768px) {
-            .container {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            
-            .card {
-                padding: 25px;
-            }
-            
-            .checkbox-columns {
-                grid-template-columns: 1fr;
-            }
-            
-            .action-buttons {
-                flex-wrap: wrap;
-            }
+            .container { grid-template-columns: 1fr; gap: 20px; }
+            .card { padding: 25px; }
+            .checkbox-columns { grid-template-columns: 1fr; }
+            .action-buttons { flex-wrap: wrap; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- 왼쪽 카드 -->
-        <div class="card">
+        <!-- 개인보관용 카드 (처음엔 숨김) -->
+        <div class="card personal-card">
             <div class="decorative-element"></div>
             <div class="header">
                 <div class="church-logo">
                     <div>태신자</div>
                     <div>작정카드</div>
-                    <div style="font-size: 12px; margin-top: 3px;">(개인보관명)</div>
+                    <div style="font-size: 12px; margin-top: 3px;">(개인보관용)</div>
                 </div>
                 <h1 class="event-title">2025 새생명 전도축제</h1>
                 <h2 class="main-question">나의 태신자는 누구입니까?</h2>
             </div>
-            
             <div class="event-info">
                 <div class="event-date">일시: 2025년 <span class="highlight-date">10월 12일</span>(주일)</div>
-                <div class="event-location">장소: 인천성산교회 대예배당</div>
+                <div class="event-location">장소: 인천성산교회 대예배실</div>
             </div>
-            
             <div class="section">
                 <div class="section-title my-baptism">나의 태신자</div>
-                
                 <div class="input-group">
                     <span class="input-number">01</span>
                     <input type="text" class="input-field" id="baptism1" placeholder="이름을 입력하세요">
                 </div>
-                
                 <div class="input-group">
                     <span class="input-number">02</span>
                     <input type="text" class="input-field" id="baptism2" placeholder="이름을 입력하세요">
                 </div>
-                
                 <div class="input-group">
                     <span class="input-number">03</span>
                     <input type="text" class="input-field" id="baptism3" placeholder="이름을 입력하세요">
                 </div>
             </div>
-            
             <div class="section">
                 <div class="section-title promise">서약</div>
-                
                 <div class="promise-text">
                     <div class="promise-item">01. 예수님께서 보여주신 희생과 사랑으로 태신자를 품겠습니다.</div>
                     <div class="promise-item">02. 태신자를 작정하고 하루 한 번 이상 기도하겠습니다.</div>
                     <div class="promise-item">03. 태신자를 사랑으로 섬기고 교회에 초청하겠습니다.</div>
                 </div>
             </div>
-            
             <div class="checkbox-section">
                 <div class="checkbox-title">✓ 태신자 양육 체크표</div>
                 <div class="checkbox-columns">
@@ -505,7 +253,6 @@
                             <label for="care4">구체적인 기도제목들을 알아봅니다.</label>
                         </div>
                     </div>
-                    
                     <div class="checkbox-group stage2">
                         <h4>2단계 교회 초청 및 정착</h4>
                         <div class="checkbox-item">
@@ -527,14 +274,12 @@
                     </div>
                 </div>
             </div>
-            
             <div class="church-info">
                 <div class="church-name">인천성산교회</div>
                 <div class="church-name-en">INCHEON SEONGSAN METHODIST CHURCH</div>
             </div>
         </div>
-        
-        <!-- 오른쪽 카드 -->
+        <!-- 교회제출용 카드 (처음엔 보임) -->
         <div class="card right-card">
             <div class="decorative-element"></div>
             <div class="header">
@@ -545,10 +290,9 @@
                 </div>
                 <div class="baptism-info">
                     <h3>일시: 2025년 10월 12일(주일)</h3>
-                    <div>장소: 인천성산교회 대예배당</div>
+                    <div>장소: 인천성산교회 대예배실</div>
                 </div>
             </div>
-            
             <div class="section">
                 <div class="section-title">작성자</div>
                 <div class="form-section">
@@ -563,7 +307,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="section">
                 <div class="section-title">나의 태신자</div>
                 <div class="form-section">
@@ -582,7 +325,6 @@
                         <input type="text" class="relation-input" id="person1-relation" placeholder="관계">
                     </div>
                 </div>
-                
                 <div class="form-section">
                     <div class="form-row">
                         <span class="form-label">이름</span>
@@ -599,7 +341,6 @@
                         <input type="text" class="relation-input" id="person2-relation" placeholder="관계">
                     </div>
                 </div>
-                
                 <div class="form-section">
                     <div class="form-row">
                         <span class="form-label">이름</span>
@@ -617,70 +358,56 @@
                     </div>
                 </div>
             </div>
-            
             <div class="action-buttons">
-                <button class="action-btn save-btn" onclick="saveData()">저장하기</button>
+                <button class="action-btn save-btn" onclick="saveData()">제출하기</button>
                 <button class="action-btn load-btn" onclick="loadData()">불러오기</button>
                 <button class="action-btn clear-btn" onclick="clearData()">모두 지우기</button>
             </div>
-            
             <div class="status-message" id="statusMessage"></div>
         </div>
     </div>
-
     <script>
-        // 저장된 데이터 키
+        // 숨김/보임 처리 및 데이터 저장 로직
         const STORAGE_KEY = 'baptism_card_data';
-        
-        // 상태 메시지 표시 함수
+
         function showStatusMessage(message, type = 'success') {
             const statusEl = document.getElementById('statusMessage');
             statusEl.textContent = message;
             statusEl.className = `status-message ${type} show`;
-            
             setTimeout(() => {
                 statusEl.className = 'status-message';
             }, 3000);
         }
-        
-        // 데이터 키 생성 함수 (이름 + 속회)
+
         function generateDataKey(name, group) {
             return `${name}_${group || ''}`;
         }
-        
-        // 같은 이름의 데이터가 존재하는지 확인
+
         function checkDuplicateName(name, currentGroup) {
             if (!window.savedData) return false;
-            
             const keys = Object.keys(window.savedData);
             const sameNameKeys = keys.filter(key => key.startsWith(name + '_'));
-            
-            // 같은 이름이 있지만 다른 속회인 경우
             if (sameNameKeys.length > 0) {
                 const currentKey = generateDataKey(name, currentGroup);
                 return sameNameKeys.some(key => key !== currentKey);
             }
-            
             return false;
         }
-        
-        // 데이터 저장 함수
+
         function saveData() {
             const authorName = document.getElementById('author-name').value.trim();
             const authorGroup = document.getElementById('author-group').value.trim();
-            
+
             if (!authorName) {
                 showStatusMessage('작성자 이름을 입력해주세요.', 'error');
                 return;
             }
-            
-            // 같은 이름의 다른 데이터가 있는지 확인
             if (checkDuplicateName(authorName, authorGroup) && !authorGroup) {
                 showStatusMessage('같은 이름의 데이터가 있습니다. 속회를 입력해주세요.', 'warning');
                 document.getElementById('author-group').focus();
                 return;
             }
-            
+
             const data = {
                 authorName: authorName,
                 authorPhone: document.getElementById('author-phone').value,
@@ -702,50 +429,51 @@
                 person3Relation: document.getElementById('person3-relation').value,
                 checkboxes: {}
             };
-            
-            // 체크박스 상태 저장
+
             const checkboxes = document.querySelectorAll('input[type="checkbox"]');
             checkboxes.forEach(checkbox => {
                 data.checkboxes[checkbox.id] = checkbox.checked;
             });
-            
-            // 메모리에 저장 (이름 + 속회를 키로 사용)
+
             window.savedData = window.savedData || {};
             const dataKey = generateDataKey(authorName, authorGroup);
             window.savedData[dataKey] = data;
-            
+
             const displayName = authorGroup ? `${authorName} (${authorGroup})` : authorName;
             showStatusMessage(`${displayName}님의 데이터가 저장되었습니다.`, 'success');
+
+            // 카드 전환: 교회제출용 → 개인보관용
+            const personalCard = document.querySelector('.personal-card');
+            const churchCard = document.querySelector('.right-card');
+            if (personalCard && churchCard) {
+                churchCard.classList.add('hide');
+                personalCard.classList.remove('hide');
+            }
         }
-        
-        // 데이터 불러오기 함수
+
         function loadData() {
             const authorName = document.getElementById('author-name').value.trim();
             const authorGroup = document.getElementById('author-group').value.trim();
-            
+
             if (!authorName) {
                 showStatusMessage('작성자 이름을 입력해주세요.', 'error');
                 return;
             }
-            
-            // 같은 이름의 다른 데이터가 있는지 확인
             if (checkDuplicateName(authorName, authorGroup) && !authorGroup) {
                 showStatusMessage('같은 이름의 데이터가 여러 개 있습니다. 속회를 입력해주세요.', 'warning');
                 document.getElementById('author-group').focus();
                 return;
             }
-            
-            // 메모리에서 데이터 불러오기
+
             const dataKey = generateDataKey(authorName, authorGroup);
             const savedData = window.savedData && window.savedData[dataKey];
-            
+
             if (!savedData) {
                 const displayName = authorGroup ? `${authorName} (${authorGroup})` : authorName;
                 showStatusMessage(`${displayName}님의 저장된 데이터가 없습니다.`, 'error');
                 return;
             }
-            
-            // 폼 데이터 복원
+
             document.getElementById('author-phone').value = savedData.authorPhone || '';
             document.getElementById('author-group').value = savedData.authorGroup || '';
             document.getElementById('baptism1').value = savedData.baptism1 || '';
@@ -763,11 +491,50 @@
             document.getElementById('person3-phone').value = savedData.person3Phone || '';
             document.getElementById('person3-gender').value = savedData.person3Gender || '';
             document.getElementById('person3-relation').value = savedData.person3Relation || '';
-            
-            // 체크박스 상태 복원
+
             if (savedData.checkboxes) {
                 Object.keys(savedData.checkboxes).forEach(id => {
                     const checkbox = document.getElementById(id);
                     if (checkbox) {
                         checkbox.checked = savedData.checkboxes[id];
                     }
+                });
+            }
+        }
+
+        function clearData() {
+            document.getElementById('author-name').value = '';
+            document.getElementById('author-phone').value = '';
+            document.getElementById('author-group').value = '';
+            document.getElementById('baptism1').value = '';
+            document.getElementById('baptism2').value = '';
+            document.getElementById('baptism3').value = '';
+            document.getElementById('person1-name').value = '';
+            document.getElementById('person1-phone').value = '';
+            document.getElementById('person1-gender').value = '';
+            document.getElementById('person1-relation').value = '';
+            document.getElementById('person2-name').value = '';
+            document.getElementById('person2-phone').value = '';
+            document.getElementById('person2-gender').value = '';
+            document.getElementById('person2-relation').value = '';
+            document.getElementById('person3-name').value = '';
+            document.getElementById('person3-phone').value = '';
+            document.getElementById('person3-gender').value = '';
+            document.getElementById('person3-relation').value = '';
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => { checkbox.checked = false; });
+            showStatusMessage('모든 입력값이 초기화되었습니다.', 'success');
+        }
+
+        // 페이지 로드 시 교회제출용만 보이게
+        window.addEventListener('DOMContentLoaded', () => {
+            const personalCard = document.querySelector('.personal-card');
+            const churchCard = document.querySelector('.right-card');
+            if (personalCard && churchCard) {
+                personalCard.classList.add('hide');
+                churchCard.classList.remove('hide');
+            }
+        });
+    </script>
+</body>
+</html>
