@@ -212,15 +212,15 @@
                 <div class="section-title my-baptism">나의 태신자</div>
                 <div class="input-group">
                     <span class="input-number">01</span>
-                    <input type="text" class="input-field" id="baptism1" placeholder="이름을 입력하세요">
+                    <input type="text" class="input-field" id="baptism1" placeholder="이름을 입력하세요" readonly>
                 </div>
                 <div class="input-group">
                     <span class="input-number">02</span>
-                    <input type="text" class="input-field" id="baptism2" placeholder="이름을 입력하세요">
+                    <input type="text" class="input-field" id="baptism2" placeholder="이름을 입력하세요" readonly>
                 </div>
                 <div class="input-group">
                     <span class="input-number">03</span>
-                    <input type="text" class="input-field" id="baptism3" placeholder="이름을 입력하세요">
+                    <input type="text" class="input-field" id="baptism3" placeholder="이름을 입력하세요" readonly>
                 </div>
             </div>
             <div class="section">
@@ -367,9 +367,17 @@
         </div>
     </div>
     <script>
-        // 숨김/보임 처리 및 데이터 저장 로직
-        const STORAGE_KEY = 'baptism_card_data';
+        // 태신자 이름 자동 연동
+        function syncBaptismNames() {
+            document.getElementById('baptism1').value = document.getElementById('person1-name').value;
+            document.getElementById('baptism2').value = document.getElementById('person2-name').value;
+            document.getElementById('baptism3').value = document.getElementById('person3-name').value;
+        }
+        ['person1-name', 'person2-name', 'person3-name'].forEach(id => {
+            document.getElementById(id).addEventListener('input', syncBaptismNames);
+        });
 
+        // 메시지 표시
         function showStatusMessage(message, type = 'success') {
             const statusEl = document.getElementById('statusMessage');
             statusEl.textContent = message;
@@ -379,136 +387,73 @@
             }, 3000);
         }
 
-        function generateDataKey(name, group) {
-            return `${name}_${group || ''}`;
-        }
-
-        function checkDuplicateName(name, currentGroup) {
-            if (!window.savedData) return false;
-            const keys = Object.keys(window.savedData);
-            const sameNameKeys = keys.filter(key => key.startsWith(name + '_'));
-            if (sameNameKeys.length > 0) {
-                const currentKey = generateDataKey(name, currentGroup);
-                return sameNameKeys.some(key => key !== currentKey);
-            }
-            return false;
-        }
-
+        // 구글 앱스크립트로 데이터 전송
         function saveData() {
             const authorName = document.getElementById('author-name').value.trim();
             const authorGroup = document.getElementById('author-group').value.trim();
+            const authorPhone = document.getElementById('author-phone').value.trim();
 
             if (!authorName) {
                 showStatusMessage('작성자 이름을 입력해주세요.', 'error');
                 return;
             }
-            if (checkDuplicateName(authorName, authorGroup) && !authorGroup) {
-                showStatusMessage('같은 이름의 데이터가 있습니다. 속회를 입력해주세요.', 'warning');
-                document.getElementById('author-group').focus();
-                return;
-            }
 
-            const data = {
-                authorName: authorName,
-                authorPhone: document.getElementById('author-phone').value,
-                authorGroup: authorGroup,
-                baptism1: document.getElementById('baptism1').value,
-                baptism2: document.getElementById('baptism2').value,
-                baptism3: document.getElementById('baptism3').value,
-                person1Name: document.getElementById('person1-name').value,
-                person1Phone: document.getElementById('person1-phone').value,
-                person1Gender: document.getElementById('person1-gender').value,
-                person1Relation: document.getElementById('person1-relation').value,
-                person2Name: document.getElementById('person2-name').value,
-                person2Phone: document.getElementById('person2-phone').value,
-                person2Gender: document.getElementById('person2-gender').value,
-                person2Relation: document.getElementById('person2-relation').value,
-                person3Name: document.getElementById('person3-name').value,
-                person3Phone: document.getElementById('person3-phone').value,
-                person3Gender: document.getElementById('person3-gender').value,
-                person3Relation: document.getElementById('person3-relation').value,
-                checkboxes: {}
-            };
+            // 태신자 정보
+            const person1Name = document.getElementById('person1-name').value.trim();
+            const person1Gender = document.getElementById('person1-gender').value;
+            const person1Phone = document.getElementById('person1-phone').value.trim();
+            const person1Relation = document.getElementById('person1-relation').value.trim();
 
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            checkboxes.forEach(checkbox => {
-                data.checkboxes[checkbox.id] = checkbox.checked;
+            const person2Name = document.getElementById('person2-name').value.trim();
+            const person2Gender = document.getElementById('person2-gender').value;
+            const person2Phone = document.getElementById('person2-phone').value.trim();
+            const person2Relation = document.getElementById('person2-relation').value.trim();
+
+            const person3Name = document.getElementById('person3-name').value.trim();
+            const person3Gender = document.getElementById('person3-gender').value;
+            const person3Phone = document.getElementById('person3-phone').value.trim();
+            const person3Relation = document.getElementById('person3-relation').value.trim();
+
+            // 체크박스 상태
+            const checkboxes = {};
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                checkboxes[cb.id] = cb.checked ? 'O' : '';
             });
 
-            window.savedData = window.savedData || {};
-            const dataKey = generateDataKey(authorName, authorGroup);
-            window.savedData[dataKey] = data;
+            // 전송 데이터 구성
+            const data = {
+                authorName, authorGroup, authorPhone,
+                person1Name, person1Gender, person1Phone, person1Relation,
+                person2Name, person2Gender, person2Phone, person2Relation,
+                person3Name, person3Gender, person3Phone, person3Relation,
+                care1: checkboxes.care1, care2: checkboxes.care2, care3: checkboxes.care3, care4: checkboxes.care4,
+                invite1: checkboxes.invite1, invite2: checkboxes.invite2, invite3: checkboxes.invite3, invite4: checkboxes.invite4
+            };
 
-            const displayName = authorGroup ? `${authorName} (${authorGroup})` : authorName;
-            showStatusMessage(`${displayName}님의 데이터가 저장되었습니다.`, 'success');
-
-            // 카드 전환: 교회제출용 → 개인보관용
-            const personalCard = document.querySelector('.personal-card');
-            const churchCard = document.querySelector('.right-card');
-            if (personalCard && churchCard) {
-                churchCard.classList.add('hide');
-                personalCard.classList.remove('hide');
-            }
+            // Google Apps Script로 POST 전송
+            fetch("https://script.google.com/macros/s/AKfycbwyqkcfuJtC5wUb31y5VIsNoYEauJcQqXBky_rNBfExa47Lz9RugVG7pyBZrol9pI4v4A/exec", {
+                method: "POST",
+                mode: "no-cors", // 성공여부를 알 수 없으나, CORS 에러를 피함
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            }).then(() => {
+                showStatusMessage('제출이 완료되었습니다.', 'success');
+                // 카드 전환: 교회제출용 → 개인보관용
+                document.querySelector('.personal-card').classList.remove('hide');
+                document.querySelector('.right-card').classList.add('hide');
+            }).catch(() => {
+                showStatusMessage('제출에 실패했습니다. 다시 시도해주세요.', 'error');
+            });
         }
 
+        // 불러오기/초기화(로컬 저장용, 구글시트 연동과 별개)
         function loadData() {
-            const authorName = document.getElementById('author-name').value.trim();
-            const authorGroup = document.getElementById('author-group').value.trim();
-
-            if (!authorName) {
-                showStatusMessage('작성자 이름을 입력해주세요.', 'error');
-                return;
-            }
-            if (checkDuplicateName(authorName, authorGroup) && !authorGroup) {
-                showStatusMessage('같은 이름의 데이터가 여러 개 있습니다. 속회를 입력해주세요.', 'warning');
-                document.getElementById('author-group').focus();
-                return;
-            }
-
-            const dataKey = generateDataKey(authorName, authorGroup);
-            const savedData = window.savedData && window.savedData[dataKey];
-
-            if (!savedData) {
-                const displayName = authorGroup ? `${authorName} (${authorGroup})` : authorName;
-                showStatusMessage(`${displayName}님의 저장된 데이터가 없습니다.`, 'error');
-                return;
-            }
-
-            document.getElementById('author-phone').value = savedData.authorPhone || '';
-            document.getElementById('author-group').value = savedData.authorGroup || '';
-            document.getElementById('baptism1').value = savedData.baptism1 || '';
-            document.getElementById('baptism2').value = savedData.baptism2 || '';
-            document.getElementById('baptism3').value = savedData.baptism3 || '';
-            document.getElementById('person1-name').value = savedData.person1Name || '';
-            document.getElementById('person1-phone').value = savedData.person1Phone || '';
-            document.getElementById('person1-gender').value = savedData.person1Gender || '';
-            document.getElementById('person1-relation').value = savedData.person1Relation || '';
-            document.getElementById('person2-name').value = savedData.person2Name || '';
-            document.getElementById('person2-phone').value = savedData.person2Phone || '';
-            document.getElementById('person2-gender').value = savedData.person2Gender || '';
-            document.getElementById('person2-relation').value = savedData.person2Relation || '';
-            document.getElementById('person3-name').value = savedData.person3Name || '';
-            document.getElementById('person3-phone').value = savedData.person3Phone || '';
-            document.getElementById('person3-gender').value = savedData.person3Gender || '';
-            document.getElementById('person3-relation').value = savedData.person3Relation || '';
-
-            if (savedData.checkboxes) {
-                Object.keys(savedData.checkboxes).forEach(id => {
-                    const checkbox = document.getElementById(id);
-                    if (checkbox) {
-                        checkbox.checked = savedData.checkboxes[id];
-                    }
-                });
-            }
+            showStatusMessage('구글시트 저장용 버전에서는 불러오기 기능을 지원하지 않습니다.', 'warning');
         }
-
         function clearData() {
             document.getElementById('author-name').value = '';
             document.getElementById('author-phone').value = '';
             document.getElementById('author-group').value = '';
-            document.getElementById('baptism1').value = '';
-            document.getElementById('baptism2').value = '';
-            document.getElementById('baptism3').value = '';
             document.getElementById('person1-name').value = '';
             document.getElementById('person1-phone').value = '';
             document.getElementById('person1-gender').value = '';
@@ -521,19 +466,18 @@
             document.getElementById('person3-phone').value = '';
             document.getElementById('person3-gender').value = '';
             document.getElementById('person3-relation').value = '';
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            checkboxes.forEach(checkbox => { checkbox.checked = false; });
+            document.getElementById('baptism1').value = '';
+            document.getElementById('baptism2').value = '';
+            document.getElementById('baptism3').value = '';
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
             showStatusMessage('모든 입력값이 초기화되었습니다.', 'success');
         }
 
         // 페이지 로드 시 교회제출용만 보이게
         window.addEventListener('DOMContentLoaded', () => {
-            const personalCard = document.querySelector('.personal-card');
-            const churchCard = document.querySelector('.right-card');
-            if (personalCard && churchCard) {
-                personalCard.classList.add('hide');
-                churchCard.classList.remove('hide');
-            }
+            document.querySelector('.personal-card').classList.add('hide');
+            document.querySelector('.right-card').classList.remove('hide');
+            syncBaptismNames();
         });
     </script>
 </body>
