@@ -167,6 +167,11 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
+        .action-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
         .status-message {
             text-align: center; margin-top: 10px; padding: 10px;
             border-radius: 8px; font-size: 14px; opacity: 0; transition: opacity 0.3s;
@@ -182,6 +187,7 @@
         }
         .status-message.show { opacity: 1; }
         .hide { display: none !important; }
+        .loading { opacity: 0.7; pointer-events: none; }
         @media (max-width: 768px) {
             .container { grid-template-columns: 1fr; gap: 20px; }
             .card { padding: 25px; }
@@ -387,6 +393,14 @@
             }, 3000);
         }
 
+        // 버튼 비활성화/활성화
+        function toggleButtons(disabled) {
+            document.querySelectorAll('.action-btn').forEach(btn => {
+                btn.disabled = disabled;
+            });
+            document.querySelector('.right-card').classList.toggle('loading', disabled);
+        }
+
         // 구글 앱스크립트로 데이터 전송
         function saveData() {
             const authorName = document.getElementById('author-name').value.trim();
@@ -397,6 +411,9 @@
                 showStatusMessage('작성자 이름을 입력해주세요.', 'error');
                 return;
             }
+
+            toggleButtons(true);
+            showStatusMessage('제출중...', 'warning');
 
             // 태신자 정보
             const person1Name = document.getElementById('person1-name').value.trim();
@@ -422,6 +439,7 @@
 
             // 전송 데이터 구성
             const data = {
+                timestamp: new Date().toISOString(),
                 authorName, authorGroup, authorPhone,
                 person1Name, person1Gender, person1Phone, person1Relation,
                 person2Name, person2Gender, person2Phone, person2Relation,
@@ -430,17 +448,31 @@
                 invite1: checkboxes.invite1, invite2: checkboxes.invite2, invite3: checkboxes.invite3, invite4: checkboxes.invite4
             };
 
-            fetch("https://script.google.com/macros/s/AKfycbyHd4VSRGAtTiDNAocf0K1tfR_0iIWqJ8LTgz6OzQ90TQ8SEKWTJ0VgGRDASFNKM6BKFQ/exec", {
+            fetch("https://script.google.com/macros/s/AKfycbwyqkcfuJtC5wUb31y5VIsNoYEauJcQqXBky_rNBfExa47Lz9RugVG7pyBZrol9pI4v4A/exec", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)
-            }).then(res => {
-                showStatusMessage('제출이 완료되었습니다.', 'success');
-                // 카드 전환: 교회제출용 → 개인보관용
-                document.querySelector('.personal-card').classList.remove('hide');
-                document.querySelector('.right-card').classList.add('hide');
-            }).catch(() => {
-                showStatusMessage('제출에 실패했습니다. 다시 시도해주세요.', 'error');
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            }).then(result => {
+                if (result.result === 'success') {
+                    showStatusMessage('제출이 완료되었습니다.', 'success');
+                    // 카드 전환: 교회제출용 → 개인보관용
+                    setTimeout(() => {
+                        document.querySelector('.personal-card').classList.remove('hide');
+                        document.querySelector('.right-card').classList.add('hide');
+                    }, 1000);
+                } else {
+                    throw new Error(result.error || '알 수 없는 오류가 발생했습니다.');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+                showStatusMessage(`제출에 실패했습니다: ${error.message}`, 'error');
+            }).finally(() => {
+                toggleButtons(false);
             });
         }
 
@@ -454,13 +486,23 @@
                 return;
             }
 
-            fetch(`https://script.google.com/macros/s/AKfycbwyqkcfuJtC5wUb31y5VIsNoYEauJcQqXBky_rNBfExa47Lz9RugVG7pyBZrol9pI4v4A/exec?authorName=${encodeURIComponent(authorName)}&authorGroup=${encodeURIComponent(authorGroup)}`)
-            .then(res => res.json())
+            toggleButtons(true);
+            showStatusMessage('불러오는 중...', 'warning');
+
+            fetch(`https://script.google.com/macros/s/AKfycbyHd4VSRGAtTiDNAocf0K1tfR_0iIWqJ8LTgz6OzQ90TQ8SEKWTJ0VgGRDASFNKM6BKFQ/exec?authorName=${encodeURIComponent(authorName)}&authorGroup=${encodeURIComponent(authorGroup)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
                 if (!data || !data.authorName) {
                     showStatusMessage('저장된 데이터를 찾을 수 없습니다.', 'error');
                     return;
                 }
+                
+                // 데이터 채우기
                 document.getElementById('author-phone').value = data.authorPhone || '';
                 document.getElementById('author-group').value = data.authorGroup || '';
                 document.getElementById('person1-name').value = data.person1Name || '';
@@ -475,17 +517,33 @@
                 document.getElementById('person3-gender').value = data.person3Gender || '';
                 document.getElementById('person3-phone').value = data.person3Phone || '';
                 document.getElementById('person3-relation').value = data.person3Relation || '';
+                
                 // 체크박스
                 ['care1','care2','care3','care4','invite1','invite2','invite3','invite4'].forEach(id => {
-                    document.getElementById(id).checked = (data[id] === 'O');
+                    const checkbox = document.getElementById(id);
+                    if (checkbox) {
+                        checkbox.checked = (data[id] === 'O' || data[id] === true);
+                    }
                 });
+                
                 syncBaptismNames();
                 showStatusMessage('데이터를 불러왔습니다.', 'success');
             })
-            .catch(() => showStatusMessage('불러오기에 실패했습니다.', 'error'));
+            .catch(error => {
+                console.error('Error:', error);
+                showStatusMessage(`불러오기에 실패했습니다: ${error.message}`, 'error');
+            })
+            .finally(() => {
+                toggleButtons(false);
+            });
         }
 
         function clearData() {
+            if (!confirm('모든 입력값을 초기화하시겠습니까?')) {
+                return;
+            }
+
+            // 모든 입력 필드 초기화
             document.getElementById('author-name').value = '';
             document.getElementById('author-phone').value = '';
             document.getElementById('author-group').value = '';
@@ -495,25 +553,4 @@
             document.getElementById('person1-relation').value = '';
             document.getElementById('person2-name').value = '';
             document.getElementById('person2-phone').value = '';
-            document.getElementById('person2-gender').value = '';
-            document.getElementById('person2-relation').value = '';
-            document.getElementById('person3-name').value = '';
-            document.getElementById('person3-phone').value = '';
-            document.getElementById('person3-gender').value = '';
-            document.getElementById('person3-relation').value = '';
-            document.getElementById('baptism1').value = '';
-            document.getElementById('baptism2').value = '';
-            document.getElementById('baptism3').value = '';
-            document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
-            showStatusMessage('모든 입력값이 초기화되었습니다.', 'success');
-        }
-
-        // 페이지 로드 시 교회제출용만 보이게
-        window.addEventListener('DOMContentLoaded', () => {
-            document.querySelector('.personal-card').classList.add('hide');
-            document.querySelector('.right-card').classList.remove('hide');
-            syncBaptismNames();
-        });
-    </script>
-</body>
-</html>
+            document.getElementById('person2
