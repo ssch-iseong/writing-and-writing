@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>태신자 작정카드 (개인보관용 → 교회제출용)</title>
+    <title>태신자 작정카드 (교회제출용 → 개인보관용)</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap');
         body {
@@ -162,98 +162,9 @@
 </head>
 <body>
     <div class="container">
-        <!-- 개인보관용 카드 (처음에만 보임) -->
-        <div class="card" id="personalCard">
-            <div class="header">
-                <div class="church-logo">
-                    <div>태신자</div>
-                    <div>작정카드</div>
-                    <div style="font-size: 12px; margin-top: 3px;">(개인보관용)</div>
-                </div>
-                <h1 class="event-title">2025 새생명 전도축제</h1>
-                <h2 class="main-question">나의 태신자는 누구입니까?</h2>
-            </div>
-            <div class="event-info">
-                <div class="event-date">일시: 2025년 <span class="highlight-date">10월 12일</span>(주일)</div>
-                <div class="event-location">장소: 인천성산교회 대예배당</div>
-            </div>
-            <div class="section">
-                <div class="section-title my-baptism">나의 태신자</div>
-                <div class="input-group">
-                    <span class="input-number">01</span>
-                    <input type="text" class="input-field" id="baptism1" placeholder="이름을 입력하세요">
-                </div>
-                <div class="input-group">
-                    <span class="input-number">02</span>
-                    <input type="text" class="input-field" id="baptism2" placeholder="이름을 입력하세요">
-                </div>
-                <div class="input-group">
-                    <span class="input-number">03</span>
-                    <input type="text" class="input-field" id="baptism3" placeholder="이름을 입력하세요">
-                </div>
-            </div>
-            <div class="section">
-                <div class="section-title promise">서약</div>
-                <div class="promise-text">
-                    <div class="promise-item">01. 예수님께서 보여주신 희생과 사랑으로 태신자를 품겠습니다.</div>
-                    <div class="promise-item">02. 태신자를 작정하고 하루 한 번 이상 기도하겠습니다.</div>
-                    <div class="promise-item">03. 태신자를 사랑으로 섬기고 교회에 초청하겠습니다.</div>
-                </div>
-            </div>
-            <div class="checkbox-section">
-                <div class="checkbox-title">✓ 태신자 양육 체크표</div>
-                <div class="checkbox-columns">
-                    <div class="checkbox-group stage1">
-                        <h4>1단계 관계형성 및 복음소개</h4>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="care1" >
-                            <label for="care1">매일 정한 시간에 중보기도 합니다.</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="care2" >
-                            <label for="care2">전화/문자 연락을 지속합니다.</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="care3" >
-                            <label for="care3">관심을 갖고 크고 작은 필요를 섬겨줍니다.</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="care4" >
-                            <label for="care4">구체적인 기도제목들을 알아봅니다.</label>
-                        </div>
-                    </div>
-                    <div class="checkbox-group stage2">
-                        <h4>2단계 교회 초청 및 정착</h4>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="invite1" >
-                            <label for="invite1">새생명 전도축제에 초대합니다.</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="invite2" >
-                            <label for="invite2">새가족 등록/교육을 안내합니다.</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="invite3" >
-                            <label for="invite3">예수님을 영접하도록 도와줍니다.</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="invite4" >
-                            <label for="invite4">지속적인 예배 참석을 권유합니다.</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="church-info">
-                <div class="church-name">인천성산교회</div>
-                <div class="church-name-en">INCHEON SEONGSAN METHODIST CHURCH</div>
-            </div>
-            <div class="action-buttons">
-                <button class="action-btn" id="goToSubmit" type="button">제출하기</button>
-            </div>
-        </div>
-        <!-- 교회제출용 카드 (처음엔 숨김) -->
-        <div class="card hide" id="churchCard">
-          <form id="baptismForm" action="https://script.google.com/macros/s/AKfycbx71QhgB7D-f0OIE8TtYjb1KpnMa2VTQV0kuQGmXiJF7wKZJYWpASM8It2SMNXGaAb17A/exec" method="POST">
+        <!-- 교회제출용 카드 (처음에만 보임) -->
+        <div class="card" id="churchCard">
+          <form id="baptismForm" action="https://script.google.com/macros/s/AKfycbwyqkcfuJtC5wUb31y5VIsNoYEauJcQqXBky_rNBfExa47Lz9RugVG7pyBZrol9pI4v4A/exec" method="POST">
             <div class="header">
                 <div class="church-logo">
                     <div>태신자</div>
@@ -374,33 +285,124 @@
                 </div>
             </div>
             <div class="action-buttons">
-                <button class="action-btn" type="submit">저장하기</button>
+                <button class="action-btn" type="submit" id="submitBtn">제출하기</button>
             </div>
             <div class="status-message" id="statusMessage"></div>
           </form>
         </div>
+        <!-- 개인보관용 카드 (처음엔 숨김) -->
+        <div class="card hide" id="personalCard">
+            <div class="header">
+                <div class="church-logo">
+                    <div>태신자</div>
+                    <div>작정카드</div>
+                    <div style="font-size: 12px; margin-top: 3px;">(개인보관용)</div>
+                </div>
+                <h1 class="event-title">2025 새생명 전도축제</h1>
+                <h2 class="main-question">나의 태신자는 누구입니까?</h2>
+            </div>
+            <div class="event-info">
+                <div class="event-date">일시: 2025년 <span class="highlight-date">10월 12일</span>(주일)</div>
+                <div class="event-location">장소: 인천성산교회 대예배당</div>
+            </div>
+            <div class="section">
+                <div class="section-title my-baptism">나의 태신자</div>
+                <div class="input-group">
+                    <span class="input-number">01</span>
+                    <input type="text" class="input-field" id="baptism1" placeholder="이름을 입력하세요" readonly>
+                </div>
+                <div class="input-group">
+                    <span class="input-number">02</span>
+                    <input type="text" class="input-field" id="baptism2" placeholder="이름을 입력하세요" readonly>
+                </div>
+                <div class="input-group">
+                    <span class="input-number">03</span>
+                    <input type="text" class="input-field" id="baptism3" placeholder="이름을 입력하세요" readonly>
+                </div>
+            </div>
+            <div class="section">
+                <div class="section-title promise">서약</div>
+                <div class="promise-text">
+                    <div class="promise-item">01. 예수님께서 보여주신 희생과 사랑으로 태신자를 품겠습니다.</div>
+                    <div class="promise-item">02. 태신자를 작정하고 하루 한 번 이상 기도하겠습니다.</div>
+                    <div class="promise-item">03. 태신자를 사랑으로 섬기고 교회에 초청하겠습니다.</div>
+                </div>
+            </div>
+            <div class="checkbox-section">
+                <div class="checkbox-title">✓ 태신자 양육 체크표</div>
+                <div class="checkbox-columns">
+                    <div class="checkbox-group stage1">
+                        <h4>1단계 관계형성 및 복음소개</h4>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="care1_p" disabled>
+                            <label for="care1_p">매일 정한 시간에 중보기도 합니다.</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="care2_p" disabled>
+                            <label for="care2_p">전화/문자 연락을 지속합니다.</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="care3_p" disabled>
+                            <label for="care3_p">관심을 갖고 크고 작은 필요를 섬겨줍니다.</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="care4_p" disabled>
+                            <label for="care4_p">구체적인 기도제목들을 알아봅니다.</label>
+                        </div>
+                    </div>
+                    <div class="checkbox-group stage2">
+                        <h4>2단계 교회 초청 및 정착</h4>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="invite1_p" disabled>
+                            <label for="invite1_p">새생명 전도축제에 초대합니다.</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="invite2_p" disabled>
+                            <label for="invite2_p">새가족 등록/교육을 안내합니다.</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="invite3_p" disabled>
+                            <label for="invite3_p">예수님을 영접하도록 도와줍니다.</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="invite4_p" disabled>
+                            <label for="invite4_p">지속적인 예배 참석을 권유합니다.</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="church-info">
+                <div class="church-name">인천성산교회</div>
+                <div class="church-name-en">INCHEON SEONGSAN METHODIST CHURCH</div>
+            </div>
+        </div>
     </div>
     <script>
-        // 개인보관용 → 교회제출용 화면 전환 및 데이터 복사
-        document.getElementById('goToSubmit').addEventListener('click', function() {
-            // 입력값 복사
-            document.getElementById('person1-name').value = document.getElementById('baptism1').value;
-            document.getElementById('person2-name').value = document.getElementById('baptism2').value;
-            document.getElementById('person3-name').value = document.getElementById('baptism3').value;
+        // 폼 제출시 화면 전환 및 입력값 복사
+        document.getElementById('baptismForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // 태신자 이름 복사
+            document.getElementById('baptism1').value = document.getElementById('person1-name').value;
+            document.getElementById('baptism2').value = document.getElementById('person2-name').value;
+            document.getElementById('baptism3').value = document.getElementById('person3-name').value;
 
             // 체크박스 복사
-            document.getElementById('care1_c').checked = document.getElementById('care1').checked;
-            document.getElementById('care2_c').checked = document.getElementById('care2').checked;
-            document.getElementById('care3_c').checked = document.getElementById('care3').checked;
-            document.getElementById('care4_c').checked = document.getElementById('care4').checked;
-            document.getElementById('invite1_c').checked = document.getElementById('invite1').checked;
-            document.getElementById('invite2_c').checked = document.getElementById('invite2').checked;
-            document.getElementById('invite3_c').checked = document.getElementById('invite3').checked;
-            document.getElementById('invite4_c').checked = document.getElementById('invite4').checked;
+            document.getElementById('care1_p').checked = document.getElementById('care1_c').checked;
+            document.getElementById('care2_p').checked = document.getElementById('care2_c').checked;
+            document.getElementById('care3_p').checked = document.getElementById('care3_c').checked;
+            document.getElementById('care4_p').checked = document.getElementById('care4_c').checked;
+            document.getElementById('invite1_p').checked = document.getElementById('invite1_c').checked;
+            document.getElementById('invite2_p').checked = document.getElementById('invite2_c').checked;
+            document.getElementById('invite3_p').checked = document.getElementById('invite3_c').checked;
+            document.getElementById('invite4_p').checked = document.getElementById('invite4_c').checked;
 
             // 화면 전환
-            document.getElementById('personalCard').classList.add('hide');
-            document.getElementById('churchCard').classList.remove('hide');
+            document.getElementById('churchCard').classList.add('hide');
+            document.getElementById('personalCard').classList.remove('hide');
+
+            // 폼 실제 제출(구글시트로)
+            e.target.submit();
         });
     </script>
 </body>
