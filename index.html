@@ -490,7 +490,7 @@
             toggleButtons(true);
             showStatusMessage('불러오는 중...', 'warning');
 
-            fetch(`https://script.google.com/macros/s/AKfycbyHd4VSRGAtTiDNAocf0K1tfR_0iIWqJ8LTgz6OzQ90TQ8SEKWTJ0VgGRDASFNKM6BKFQ/exec?authorName=${encodeURIComponent(authorName)}&authorGroup=${encodeURIComponent(authorGroup)}`)
+            fetch(`https://script.google.com/macros/s/AKfycbzexiY8DJWnGI-lmfk36wjTiNDlnpojY54brA4QzsoBkkqd_8Tayya7DiJyjORrDAZ-jg/exec?authorName=${encodeURIComponent(authorName)}&authorGroup=${encodeURIComponent(authorGroup)}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
